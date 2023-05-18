@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>03b - Objets littéraux, DOM et interactivité</title>
+
+        <!-- Ajustement de la taille du viewport-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" href="medias/favicon.png" />
+
+        <!-- Importation de la police de caractère Google Font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+        <!-- Polices d'icônes utilisées-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+        <!-- Intégration des styles -->
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="css/styleBase.css" />
+        <link rel="stylesheet" href="css/styleQuiz.css" />
+    </head>
+
+    <body>
+        <!-- Balise du curseur -->
+        <div class="curseur"></div>
+
+        <!-- Conteneur du titre -->
+        <header></header>
+
+        <!-- Section de démarrage -->
+        <main class="intro">
+            <!-- Clap -->
+            <div class="clappeur">
+                <!-- 2 partie du clap -->
+                <div><img src="medias/ClappeurHaut.png" alt="Partie supérieur d'un clap" /></div>
+                <div><img src="medias/ClappeurBas.png" alt="Partie inférieur d'un clap" /></div>
+            </div>
+        </main>
+
+        <!-- Section du jeu -->
+        <main class="quiz">
+            <!-- Barre d'avancement supérieure -->
+            <header>
+                <div class="barre-avancement barre-haut"></div>
+            </header>
+
+            <!-- Section de jeu -->
+            <section>
+                <!-- Les questions -->
+                <div class="titre-question"></div>
+                <!-- Conteneur des choix de réponses -->
+                <div class="les-choix-de-reponse"></div>
+            </section>
+
+            <!-- Barre d'avancement inférieure -->
+            <footer>
+                <div class="barre-avancement barre-bas"></div>
+            </footer>
+        </main>
+
+        <!-- Section de fin -->
+        <main class="fin">
+            <!-- La section contenant le score sera insérée dynamiquement ici -->
+            <img src="medias/btnRecommencer.png" alt="Bouton de redemarrage" class="btn-recommencer" />
+        </main>
+
+        <!-- Scripts JavaScript -->
+        <script src="js/questionsQuiz.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,415 @@
+/* Animations
+=============================================== */
+/*------- Animation du clap au début--------*/
+@keyframes clappeur-mouvement {
+    from {
+        transform: translateY(50rem) rotate(-10deg);
+    }
+
+    to {
+        transform: translateY(0%) rotate(0deg);
+    }
+}
+@keyframes clappeur-rotation {
+    from,
+    to {
+        transform: rotate(0deg);
+    }
+    80% {
+        transform: rotate(-20deg);
+    }
+}
+@keyframes clappeur-haut-mouvement {
+    from,
+    to {
+        transform: rotate(0deg);
+    }
+    80% {
+        transform: rotate(-20deg);
+    }
+}
+
+/*------- Animation des questions--------*/
+@keyframes texte-questions-apparition {
+    from {
+        transform: translateY(-20vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/*------- Animation des choix de réponses--------*/
+@keyframes fondu-haut-entrant {
+    from {
+        transform: translateY(3rem);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes fondu-bas-sortant {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(3rem);
+        opacity: 0;
+    }
+}
+
+/*------- Animation du résultat--------*/
+@keyframes animer-resultat {
+    from {
+        transform: translateY(-20vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/*------- Animation du bouton de redémarrage--------*/
+@keyframes btn-recommencer {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+/* Mise en page de l'intro
+============================================================*/
+/*Contenant des 2 parties du clap*/
+.clappeur {
+    z-index: 30;
+    animation: clappeur-mouvement 1s cubic-bezier(0.08, 0.82, 0.74, 1.46), clappeur-rotation 2s 1s ease-in;
+}
+/*Partie supérieur du clap*/
+.clappeur div:first-of-type {
+    width: 100%;
+    /*On le superpose légerement sur la partie inférieure*/
+    position: relative;
+    top: 1vw;
+    transform-origin: bottom left;
+    animation: clappeur-haut-mouvement 2s 1s ease-in;
+}
+/*Partie inférieure du clap*/
+.clappeur div:last-of-type {
+    width: 100%;
+}
+/*Tailles des images du clap*/
+img {
+    width: 15vmin;
+}
+/*Propriété des 2 vidéos*/
+#video {
+    position: fixed;
+    z-index: 1;
+    width: 60vmin;
+}
+
+/*Bouton pour débuter le quiz*/
+.boutonCommencer {
+    position: absolute;
+    bottom: 10vh;
+    font-family: "Poppins";
+    color: var(--couleur-textes);
+    background-color: transparent;
+    height: 6rem;
+    width: 15rem;
+    /*Positionne le texte à l'intérieur*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    z-index: 30;
+    transition: background-color 0.5s, color 0, 5s;
+    animation: fondu-haut-entrant 0.5s ease-out forwards;
+}
+/*Ligne de bordure plus large du bouton*/
+.boutonCommencer::before {
+    content: "";
+    position: absolute;
+    width: 15rem;
+    height: 4rem;
+    border: var(--couleur-lignes) solid 1px;
+    transition: width 0.5s, height 0.5s;
+}
+/*Ligne de bordure plus haute du bouton*/
+.boutonCommencer::after {
+    content: "";
+    position: absolute;
+    width: 13rem;
+    height: 6rem;
+    border: var(--couleur-lignes) solid 1px;
+    transition: width 0.5s, height 0.5s;
+}
+/*Lorsque la classe survol est ajoutée, les deux pseudos éléments prennent la même taille de base*/
+.boutonCommencer.survol::before,
+.boutonCommencer.survol::after {
+    width: 15rem;
+    height: 6rem;
+}
+
+/* Mise en page des questions du quiz
+============================================================*/
+/*Conteneur principal lors du quiz*/
+main.quiz {
+    /*Conteneur flex en colonne*/
+    flex-direction: column;
+}
+/* Les barres qui illustrent l'avancement du quiz */
+.barre-avancement {
+    position: absolute;
+    width: 0vw;
+    height: 1px;
+    top: 0;
+
+    background-color: var(--couleur-lignes);
+    transition: width 0.5s;
+}
+/* La barre d'avancement supérieure */
+.barre-avancement.barre-haut {
+    left: 0;
+}
+/* La barre d'avancement inférieure */
+.barre-avancement.barre-bas {
+    right: 0;
+}
+
+/*Section comportant les questions et les choix*/
+section {
+    width: 70vw;
+    /*Toute la hauteur moins celles des deux barres d'avancements*/
+    height: calc(70vh - 2px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /*On cache ce qui déborde pour maqeur les questions durant leur apparition*/
+    overflow: hidden;
+}
+/*Les questions*/
+section .titre-question {
+    font-size: 3vmin;
+    font-family: "Poppins";
+    text-align: center;
+    color: #c5a028;
+
+    width: 90%;
+    margin-top: 3rem;
+}
+/*Contient tout les boutons de choix*/
+section .les-choix-de-reponse {
+    /*Étirement comme item flex*/
+    flex: 1 1 auto;
+
+    /*Conteneur flex en colonne*/
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+/*Empêche la sélection d'un choix lorsque désactivé*/
+section .les-choix-de-reponse.desactiver {
+    pointer-events: none;
+}
+
+/*bouton de chaque choix*/
+div.choix {
+    width: 10rem;
+    height: 4rem;
+
+    color: var(--couleur-textes);
+    font-family: "Poppins";
+    font-size: 0.5rem;
+
+    position: relative; /*Pour le pseudo-élément*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 10;
+    transition: transform 0.5s, background-color 1s, color 0.5s;
+}
+/*Ligne de contour plus large des choix de réponse*/
+div.choix::before {
+    content: "";
+    position: absolute;
+    width: 10rem;
+    height: 2.6rem;
+    border: var(--couleur-lignes) solid 1px;
+    transition: width 0.5s, height 0.5s;
+}
+/*Ligne de contour plus haute des choix de réponse*/
+div.choix::after {
+    content: "";
+    position: absolute;
+    width: 8.6rem;
+    height: 4rem;
+    border: var(--couleur-lignes) solid 1px;
+    transition: width 0.5s, height 0.5s;
+}
+/*Lors du survol ou après un choix de l'utilisateur, les lignes reprennent la même taille de base*/
+.choix.survol::before,
+.choix.survol::after,
+div.choix.reponse-succes::before,
+div.choix.reponse-succes::after,
+div.choix.reponse-echec::before,
+div.choix.reponse-echec::after {
+    width: 10rem;
+    height: 4rem;
+}
+/*On change la couleur de fond et du texte pour la bonne réponse*/
+div.choix.reponse-succes {
+    background-color: var(--couleur-lignes);
+    color: black;
+}
+
+/* Mise en page de la fin du quiz
+============================================================*/
+/*Texte affichant le score et le meilleur score après la fin du quiz*/
+main.fin .resultat {
+    width: 30rem;
+    height: 10rem;
+
+    font-family: "Poppins";
+    text-align: center;
+    color: var(--couleur-textes);
+
+    display: flex;
+    justify-content: center;
+
+    animation: animer-resultat 1.5s ease-out forwards;
+}
+/*Bouton pour recommencer (flèche)*/
+main.fin .btn-recommencer {
+    margin-top: 2rem;
+    width: 12vmin;
+
+    /*Au début, elle est transparente*/
+    opacity: 0;
+    z-index: 10;
+
+    transition: opacity 2s, width 0.5s;
+}
+/*Lors du survol, on applique l'animation de rotation de la flèche*/
+main.fin .btn-recommencer.survol {
+    animation: btn-recommencer 0.5s forwards;
+}
+
+/* Styles pour les écrans plus larges
+=============================================== */
+@media screen and (min-width: 666px) {
+    body {
+        position: relative;
+        overflow: hidden;
+    }
+    /*On change la disposition des questions*/
+    section .les-choix-de-reponse {
+        flex-direction: row;
+        justify-content: center;
+    }
+    /*On applique des marges au choix de réponses*/
+    div.choix:nth-of-type(odd) {
+        margin-right: 2vw;
+    }
+    div.choix:nth-of-type(even) {
+        margin-left: 2vw;
+    }
+    /*On change la taille des bouton des réponses et leurs lignes*/
+    div.choix {
+        width: 15rem;
+        height: 6rem;
+        font-size: 0.9rem;
+    }
+    div.choix::before {
+        width: 15rem;
+        height: 4rem;
+    }
+    div.choix::after {
+        width: 13rem;
+        height: 6rem;
+    }
+    .choix.survol::before,
+    .choix.survol::after,
+    div.choix.reponse-succes::before,
+    div.choix.reponse-succes::after,
+    div.choix.reponse-echec::before,
+    div.choix.reponse-echec::after {
+        width: 15rem;
+        height: 6rem;
+    }
+    /*On change la taille du texte du résultat*/
+    .resultat {
+        font-size: 1.5rem;
+    }
+}
+@media screen and (min-width: 992px) {
+    /*On augmente la taille des marges des boutons de questions*/
+    div.choix {
+        margin-right: 6vw;
+        margin-left: 6vw;
+    }
+    /*On agrandit la taille du conteneur du texte du résultat*/
+    main.fin .resultat {
+        width: 40rem;
+    }
+}
+
+/* Mise en page du curseur
+============================================================*/
+/* Curseur général de la page */
+.curseur {
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid var(--couleur-lignes);
+
+    top: calc(var(--mouse-y) - 2rem);
+    left: calc(var(--mouse-x) - 2rem);
+
+    will-change: top, left;
+    pointer-events: none;
+    z-index: 1000;
+
+    transform: rotate(45deg);
+    transition: transform 0.5s;
+}
+/*Petit carré au centre du curseur*/
+.curseur::after {
+    content: "";
+    position: absolute;
+
+    width: 0.5rem;
+    height: 0.5rem;
+
+    top: 50%;
+    left: 50%;
+
+    border: 1px solid var(--couleur-lignes);
+    transition: transform 0.5s;
+    transform: translate(-50%, -50%);
+}
+/* Curseur inactif lorsqu'on quitte la fenêtre */
+.curseur.inactif {
+    display: none;
+}
+/* Curseur de survol des boutons cliquables dans le UI */
+.curseur.survolCurseur {
+    /*On lui fait faire une rotation*/
+    transform: rotate(-45deg) scale(1.5);
+}
+.curseur.survolCurseur::after {
+    /*On lui fait faire une rotation contraire pour qu'il reste fixe*/
+    transform: translate(-50%, -50%) rotate(180deg) scale(0.75);
+}

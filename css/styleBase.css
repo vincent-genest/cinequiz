@@ -1,0 +1,122 @@
+/* Normalisation supplémentaire
+=============================================== */
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+    user-select: none;
+}
+/* Importation des polices
+=============================================== */
+@font-face {
+    font-family: Copasetic;
+    src: url("../polices/CopaseticNF.ttf");
+}
+/* Mise en place des variables css
+=============================================== */
+:root {
+    --couleur-lignes: #c5a028;
+    --couleur-textes: #c5a028;
+}
+
+/* Mise en page de base pour petit périphérique
+================================================== */
+html {
+    width: 100vw;
+    height: 100vh;
+    /*Ajustement de la taille des polices à la racine du document*/
+    font-size: clamp(14px, 0.5rem + 1vw, 18px);
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    /*Police utilisée en cas d'erreur*/
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    /*Couleur du fond*/
+    background: radial-gradient(circle, #342c2c, #2b2527, #221f20, #191819, #111111);
+    /*Mise en page flex*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/*Ligne de contour haute */
+main::before {
+    content: "";
+    position: absolute;
+    width: 80vw;
+    height: 80vh;
+    border: var(--couleur-lignes) 1px solid;
+}
+/*Ligne de contour large (Juste les cotés, en haut et en bas sont remplacés par barre de progression)*/
+main::after {
+    content: "";
+    position: absolute;
+    width: 90vw;
+    height: 70vh;
+    border-right: var(--couleur-lignes) 1px solid;
+    border-left: var(--couleur-lignes) 1px solid;
+}
+/*Une fois le quiz fini, on remet les bordures tout autour (pas juste sur les cotés)*/
+main.fin::after {
+    border: var(--couleur-lignes) 1px solid;
+}
+/*Section principale (change selon la pregression)*/
+main {
+    display: flex;
+    /*Conteneur flex en colonne*/
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    width: 90vw;
+}
+/*Sections principales qui apparaissent plus tard*/
+main.quiz,
+main.fin {
+    /*Non affiché au démarrage*/
+    display: none;
+}
+/*Partie supérieur du quiz comprenant le titre*/
+header {
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: var(--couleur-textes);
+    text-align: center;
+}
+/*Le titre durant le quiz*/
+h2 {
+    font-family: Copasetic, sans-serif;
+    font-size: 8vmin;
+}
+/*Le titre au démarrage*/
+h1 {
+    font-family: Copasetic, sans-serif;
+    margin: 1rem 0;
+    font-size: 22vmin;
+    /*Pour mettre des bordures*/
+    color: transparent;
+    -webkit-text-stroke: var(--couleur-textes) 0.2vmin;
+    z-index: 10;
+    transition: font-size 0.5s;
+    animation: fondu-haut-entrant 2s ease-in;
+}
+/*Partie contenant la barre de progression supérieure*/
+.quiz header {
+    height: 1px;
+    width: 100%;
+    position: relative;
+}
+/*Partie contenant la barre de progression inférieure*/
+.quiz footer {
+    height: 1px;
+    width: 100%;
+    position: relative;
+}
